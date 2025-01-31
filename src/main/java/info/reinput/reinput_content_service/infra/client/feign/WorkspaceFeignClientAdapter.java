@@ -11,7 +11,7 @@ public class WorkspaceFeignClientAdapter implements WorkspaceClientAdapter {
     private final WorkspaceFeignClient workspaceFeignClient;
 
     @Override
-    public Long getSharedFolderId(final Long shareId, final Long memberId) {
+    public Long getSharedFolderId(final String shareId, final Long memberId) {
         return workspaceFeignClient.searchSharedFolderId(shareId, memberId).data().data();
     }
 

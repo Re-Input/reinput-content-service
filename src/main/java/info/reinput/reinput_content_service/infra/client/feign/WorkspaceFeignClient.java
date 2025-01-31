@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface WorkspaceFeignClient {
     @GetMapping("/folder/{shareId}")
     ApiResponse<ApiResponse<Long>> searchSharedFolderId(
-            @PathVariable final Long shareId,
+            @PathVariable final String shareId,
             @RequestHeader("X-User-Id") final Long memberId
     );
 }
