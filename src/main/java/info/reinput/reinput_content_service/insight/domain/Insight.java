@@ -10,7 +10,6 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SecondaryTable(name = "insight_share", pkJoinColumns = @PrimaryKeyJoinColumn(name = "insight_id"))
 @Table(name = "insight")
 public class Insight {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,9 +31,6 @@ public class Insight {
 
     @Column(name = "folder_id")
     private Long folderId;
-
-    @Embedded
-    private Share share;
 
     @Embedded
     private TimeAudit timeAudit;
