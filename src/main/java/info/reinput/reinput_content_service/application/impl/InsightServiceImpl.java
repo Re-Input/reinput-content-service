@@ -2,6 +2,7 @@ package info.reinput.reinput_content_service.application.impl;
 
 import info.reinput.reinput_content_service.application.InsightService;
 import info.reinput.reinput_content_service.application.dto.InsightCountCollection;
+import info.reinput.reinput_content_service.application.dto.InsightSummaryCollection;
 import info.reinput.reinput_content_service.infra.InsightRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,15 @@ public class InsightServiceImpl implements InsightService {
 
         return InsightCountCollection.builder()
                 .insightCountMap(insightRepository.countByFolderIds(folderIds))
+                .build();
+    }
+
+    @Override
+    public InsightSummaryCollection getSharedInsightSummaries(final String shareId, final Long memberId) {
+        log.info("[InsightService.getSharedInsightSummaries] shareId : {}, memberId : {}", shareId, memberId);
+
+        return InsightSummaryCollection.builder()
+                .insightSummaries(insightRepository.getSharedInsightSummaries(shareId, memberId))
                 .build();
     }
 }
