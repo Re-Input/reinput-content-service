@@ -2,6 +2,7 @@ package info.reinput.reinput_content_service.presentation;
 
 import info.reinput.reinput_content_service.application.InsightService;
 import info.reinput.reinput_content_service.application.dto.InsightCountCollection;
+import info.reinput.reinput_content_service.application.dto.InsightSummaryCollection;
 import info.reinput.reinput_content_service.presentation.dto.res.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ public class InsightApiController {
     public ResponseEntity<ApiResponse<Long>> countInsight(
             @PathVariable final Long folderId,
             @RequestHeader("X-User-Id") final Long memberId) {
-        log.info("countInsight request : {}", folderId);
+        log.info("[countInsight] folderId: {}, memberId: {} ", folderId, memberId);
         ApiResponse<Long> response = ApiResponse.<Long>builder()
                 .status(HttpStatus.OK.value())
                 .message("Insight count")
@@ -36,11 +37,24 @@ public class InsightApiController {
     public ResponseEntity<ApiResponse<InsightCountCollection>> countInsight(
             @PathVariable final List<Long> folderIds,
             @RequestHeader("X-User-Id") final Long memberId) {
-        log.info("countInsight request : {}", folderIds);
+        log.info("[countInsight] folderIds: {}, memberId: {} ", folderIds, memberId);
         ApiResponse<InsightCountCollection> response = ApiResponse.<InsightCountCollection>builder()
                 .status(HttpStatus.OK.value())
                 .message("Insight count")
                 .data(insightService.countInsight(folderIds, memberId))
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/share/{shareId}")
+    public ResponseEntity<ApiResponse<InsightSummaryCollection>> getSharedInsightSummaries(
+            @PathVariable final String shareId,
+            @RequestHeader("X-User-Id") final Long memberId) {
+        log.info("[getSharedInsightSummaries] shareId: {}, memberId: {} ", shareId, memberId);
+        ApiResponse<InsightSummaryCollection> response = ApiResponse.<InsightSummaryCollection>builder()
+                .status(HttpStatus.OK.value())
+                .message("Success get shared folder insights summaries")
+                .data(insightService.getSharedInsightSummaries(shareId, memberId))
                 .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

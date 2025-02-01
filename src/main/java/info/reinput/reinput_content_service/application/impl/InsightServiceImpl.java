@@ -41,7 +41,7 @@ public class InsightServiceImpl implements InsightService {
 
 
         return InsightSummaryCollection.builder()
-                .insightSummaries(insightRepository.findAllSummariesByFolderId(getSharedFolderId(shareId, memberId)))
+                .insightSummaries(insightRepository.getInsightSummaries(getSharedFolderId(shareId, memberId)))
                 .build();
 
     }
