@@ -4,6 +4,8 @@ import info.reinput.reinput_content_service.application.InsightService;
 import info.reinput.reinput_content_service.application.dto.InsightCountCollection;
 import info.reinput.reinput_content_service.application.dto.InsightSummaryCollection;
 import info.reinput.reinput_content_service.presentation.dto.res.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,11 +22,13 @@ public class InsightApiController {
 
     private final InsightService insightService;
 
+    @Operation(summary = "Count Insight",
+            description = "폴더에 속한 Insight 개수를 조회합니다.")
     @GetMapping("/count/folder/{folderId}")
     public ResponseEntity<ApiResponse<Long>> countInsight(
             @PathVariable final Long folderId,
-            @RequestHeader("X-User-Id") final Long memberId) {
-        log.info("[countInsight] folderId: {}, memberId: {} ", folderId, memberId);
+            @Parameter(hidden = true) @RequestHeader("X-User-Id") final Long memberId) {
+        log.info("countInsight request : {}", folderId);
         ApiResponse<Long> response = ApiResponse.<Long>builder()
                 .status(HttpStatus.OK.value())
                 .message("Insight count")
@@ -33,11 +37,13 @@ public class InsightApiController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Operation(summary = "Count Insights",
+            description = "폴더에 속한 Insight 개수를 조회합니다.")
     @GetMapping("/count/folders/{folderIds}")
     public ResponseEntity<ApiResponse<InsightCountCollection>> countInsight(
             @PathVariable final List<Long> folderIds,
-            @RequestHeader("X-User-Id") final Long memberId) {
-        log.info("[countInsight] folderIds: {}, memberId: {} ", folderIds, memberId);
+            @Parameter(hidden = true) @RequestHeader("X-User-Id") final Long memberId) {
+        log.info("countInsight request : {}", folderIds);
         ApiResponse<InsightCountCollection> response = ApiResponse.<InsightCountCollection>builder()
                 .status(HttpStatus.OK.value())
                 .message("Insight count")
