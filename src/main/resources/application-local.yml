@@ -19,3 +19,9 @@ spring:
     console:
       enabled: true
       path: /h2-console
+aws:
+  accessKey : ${AWS_ACCESS_KEY_ID}
+  secretKey : ${AWS_SECRET_ACCESS_KEY}
+  region: ap-northeast-2
+  s3:
+    bucket: reinput

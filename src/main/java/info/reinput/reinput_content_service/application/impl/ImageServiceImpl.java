@@ -6,11 +6,13 @@ import info.reinput.reinput_content_service.infra.port.ImageStoragePort;
 import info.reinput.reinput_content_service.insight.domain.Image;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RequiredArgsConstructor
+@Service
 @Transactional(readOnly = true)
 public class ImageServiceImpl implements ImageService {
 
