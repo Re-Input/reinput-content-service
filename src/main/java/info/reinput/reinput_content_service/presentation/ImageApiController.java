@@ -40,7 +40,7 @@ public class ImageApiController {
 
     @Operation(summary = "[210] Delete Image",
             description = "이미지를 삭제합니다.")
-    @DeleteMapping("/v1/{fileName}")
+    @DeleteMapping("/{fileName}/v1")
     public ResponseEntity<ApiResponse<Void>> deleteImage(
             @PathVariable final String fileName,
             @Parameter(hidden = true) @RequestHeader("X-User-Id") final Long memberId){
