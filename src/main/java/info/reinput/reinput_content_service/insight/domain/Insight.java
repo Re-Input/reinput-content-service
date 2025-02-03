@@ -19,9 +19,9 @@ public class Insight {
     @Embedded
     private InsightSummary summary;
 
-    @ElementCollection
-    @CollectionTable(name = "insight_images", joinColumns = @JoinColumn(name = "insight_id"))
-    private List<Images> images;
+    @OneToMany(mappedBy = "insight", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Image> images;
+
 
     @Embedded
     private InsightDetail detail;

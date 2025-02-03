@@ -1,2 +1,2 @@
 # reinput-content-service
-Manages Contents(Insights, Images)
+Manages Contents(Insight
