@@ -1,6 +1,7 @@
 package info.reinput.reinput_content_service.config;
 
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,10 +12,12 @@ import software.amazon.awssdk.services.s3.S3Client;
 
 @Configuration
 @Getter
-@ConfigurationProperties(prefix = "aws")
 public class AwsConfig {
+    @Value("${aws.accessKey}")
     private String accessKey;
+    @Value("${aws.secretKey}")
     private String secretKey;
+    @Value("${aws.region}")
     private String region;
 
     @Bean

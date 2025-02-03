@@ -16,8 +16,8 @@ spring:
         format_sql: true
     database-platform: org.hibernate.dialect.MySQLDialect
 aws:
-  access-key : ${AWS_ACCESS_KEY}
-  secret-key : ${AWS_SECRET_KEY}
+  accessKey : ${AWS_ACCESS_KEY_ID}
+  secretKey : ${AWS_SECRET_ACCESS_KEY}
   region: ap-northeast-2
   s3:
     bucket: reinput

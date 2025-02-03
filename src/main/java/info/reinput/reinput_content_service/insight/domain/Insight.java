@@ -21,7 +21,7 @@ public class Insight {
 
     @ElementCollection
     @CollectionTable(name = "insight_images", joinColumns = @JoinColumn(name = "insight_id"))
-    private List<Images> images;
+    private List<Image> images;
 
     @Embedded
     private InsightDetail detail;
