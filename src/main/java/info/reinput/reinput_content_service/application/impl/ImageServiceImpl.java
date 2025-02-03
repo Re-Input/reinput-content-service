@@ -20,15 +20,20 @@ public class ImageServiceImpl implements ImageService {
     @Transactional
     @Override
     public String upload(final MultipartFile file) {
+        log.info("[ImageService.upload] file : {}", file.getOriginalFilename());
         Image image = Image.from(file.getOriginalFilename());
         String imagePath = imageStoragePort.upload(file);
 
-        return null;
-
+        return imageRepository.save(image).getPublicUrl();
     }
 
+    @Transactional
     @Override
-    public void deleteImage() {
-        // TODO Auto-generated method stub
+    public void delete(final String fileName) {
+        log.info("[ImageService.delete] fileName : {}", fileName);
+        Image image = imageRepository.findByImagePath(fileName)
+                .orElseThrow(() -> new IllegalArgumentException("Image not found"));
+        imageStoragePort.delete(image.getImagePath());
+        imageRepository.delete(image);
     }
 }
