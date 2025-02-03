@@ -16,7 +16,7 @@ spring:
         format_sql: true
     database-platform: org.hibernate.dialect.MySQLDialect
 aws:
-  access-key : ${AWS_ACCESS_KEY}  # 띄어쓰기 문제 발생 가능
+  access-key : ${AWS_ACCESS_KEY}
   secret-key : ${AWS_SECRET_KEY}
   region: ap-northeast-2
   s3:
