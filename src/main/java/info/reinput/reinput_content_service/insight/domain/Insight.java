@@ -22,6 +22,7 @@ public class Insight {
     @OneToMany(mappedBy = "insight", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images;
 
+
     @Embedded
     private InsightDetail detail;
 
