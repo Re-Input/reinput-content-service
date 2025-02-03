@@ -38,7 +38,7 @@ public class ImageApiController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "[2xx] 추가 예정 - Delete Image",
+    @Operation(summary = "[210] Delete Image",
             description = "이미지를 삭제합니다.")
     @DeleteMapping("/v1/{fileName}")
     public ResponseEntity<ApiResponse<Void>> deleteImage(
