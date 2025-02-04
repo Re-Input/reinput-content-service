@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @Entity
 @NoArgsConstructor
@@ -29,6 +31,15 @@ public class Image {
         return Image.builder()
                 .imagePath(path)
                 .build();
+    }
+
+    public static List<Image> of(List<String> imagePaths, Insight insight){
+        return imagePaths.stream()
+                .map(path -> Image.builder()
+                        .imagePath(path)
+                        .insight(insight)
+                        .build())
+                .toList();
     }
 
     public String getPublicUrl(){

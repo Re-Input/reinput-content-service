@@ -69,7 +69,7 @@ public class InsightRepositoryCustomImpl implements InsightRepositoryCustom {
                     .insightTitle(title)
                     .insightMainImage(mainImagePath)
                     .insightSummery(aiSummary)
-                    .insightTags(new ArrayList<>()) // 태그 리스트를 미리 초기화
+                    .insightTags(new ArrayList<>())
                     .build());
 
             if (hashTagName != null) {
