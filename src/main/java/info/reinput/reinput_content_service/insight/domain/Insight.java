@@ -34,4 +34,15 @@ public class Insight {
 
     @Embedded
     private TimeAudit timeAudit;
+
+    public static InsightSummary createSummary(String title, String summary, String mainImagePath) {
+        return InsightSummary.of(title, summary, mainImagePath);
+    }
+
+    public static InsightDetail createDetail(String url, String memo,String source) {
+        return InsightDetail.of(url, memo, source);
+    }
+
+
+
 }
