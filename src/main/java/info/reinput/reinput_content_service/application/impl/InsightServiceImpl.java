@@ -54,6 +54,8 @@ public class InsightServiceImpl implements InsightService {
     public InsightDto saveInsight(final InsightDto insightDto, final Long memberId) {
         log.info("[InsightService.saveInsight] insightDto : {}", insightDto);
 
+        //todo : reminder : check if exist & save reminder in notification service
+
         return InsightDto.from(insightRepository.save(Insight.createInsight(
                 Insight.createSummary(insightDto.title(), insightDto.AISummary(), insightDto.mainImagePath()),
                 Insight.createDetail(insightDto.url(), insightDto.memo(), insightDto.source()),
