@@ -15,5 +15,13 @@ public class InsightSummary {
     private String title;
     private String AISummary;
     private String mainImagePath;
+
+    public static InsightSummary of(String title, String AISummary, String mainImagePath) {
+        return InsightSummary.builder()
+                .title(title)
+                .AISummary(AISummary)
+                .mainImagePath(mainImagePath)
+                .build();
+    }
 }
 

@@ -2,6 +2,7 @@ package info.reinput.reinput_content_service.presentation;
 
 import info.reinput.reinput_content_service.application.ImageService;
 import info.reinput.reinput_content_service.insight.domain.Image;
+import info.reinput.reinput_content_service.presentation.dto.req.InsightCreateReq;
 import info.reinput.reinput_content_service.presentation.dto.res.ApiResponse;
 import info.reinput.reinput_content_service.presentation.dto.res.ImageUrlRes;
 import io.swagger.v3.oas.annotations.Operation;
@@ -44,7 +45,7 @@ public class ImageApiController {
     public ResponseEntity<ApiResponse<Void>> deleteImage(
             @PathVariable final String fileName,
             @Parameter(hidden = true) @RequestHeader("X-User-Id") final Long memberId){
-        log.info("[deleteImage] fileName : {}", fileName);
+        log.info("[deleteImage] fileName : {}, memberId : {}", fileName, memberId);
 
         imageService.delete(fileName);
 

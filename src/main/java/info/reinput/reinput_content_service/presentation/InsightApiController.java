@@ -3,6 +3,7 @@ package info.reinput.reinput_content_service.presentation;
 import info.reinput.reinput_content_service.application.InsightService;
 import info.reinput.reinput_content_service.application.dto.InsightCountCollection;
 import info.reinput.reinput_content_service.application.dto.InsightSummaryCollection;
+import info.reinput.reinput_content_service.presentation.dto.req.InsightCreateReq;
 import info.reinput.reinput_content_service.presentation.dto.res.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -63,5 +64,23 @@ public class InsightApiController {
                 .data(insightService.getSharedInsightSummaries(shareId, memberId))
                 .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+    @Operation(summary = "[208] [미완성]Save Image",
+            description = "이미지를 저장합니다. Reminder 관련 서비스와 연동되어 있지 않습니다.")
+    @PostMapping("/v1")
+    public ResponseEntity<ApiResponse<InsightRes>> saveImage(
+            @Parameter(hidden = true) @RequestHeader("X-User-Id") final Long memberId,
+            @RequestBody final InsightCreateReq insightCreateReq){
+        log.info("[saveImage] insightReq memberId: {}", memberId);
+
+        ApiResponse<InsightRes> response = ApiResponse.<InsightRes>builder()
+                .status(201)
+                .message("Image saved")
+                .data(InsightRes.from(insightService.saveInsight(insightCreateReq.toDto(), memberId)))
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }

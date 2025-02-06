@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @Entity
 @NoArgsConstructor
@@ -14,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Table(name = "image")
 public class Image {
+    private final static String S3_URL = "https://static.reinput.info/";
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id")
     private Long id;
@@ -31,7 +34,18 @@ public class Image {
                 .build();
     }
 
+    public static List<Image> of(List<String> imagePaths, Insight insight){
+        //if start with S3_URL, remove it
+        return imagePaths.stream()
+                .map(path -> path.startsWith(S3_URL) ? path.substring(S3_URL.length()) : path)
+                .map(path -> Image.builder()
+                        .imagePath(path)
+                        .insight(insight)
+                        .build())
+                .toList();
+    }
+
     public String getPublicUrl(){
-        return String.format("https://static.reinput.info/%s", imagePath);
+        return String.format("%s%s", S3_URL, imagePath);
     }
 }

@@ -1,13 +1,15 @@
 package info.reinput.reinput_content_service.insight.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "hash_tag")
+@AllArgsConstructor
+@Builder
 @Entity
 public class HashTag {
     @Id
@@ -22,4 +24,12 @@ public class HashTag {
     @JoinColumn(name = "insight_id")
     private Insight insight;
 
+    public static List<HashTag> of(List<String> hashTags, Insight insight) {
+        return hashTags.stream()
+                .map(tag -> HashTag.builder()
+                        .name(tag)
+                        .insight(insight)
+                        .build())
+                .toList();
+    }
 }
