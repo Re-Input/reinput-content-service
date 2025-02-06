@@ -25,7 +25,8 @@ public record InsightDto (
         Long folderId,
         Long memberId,
         LocalDateTime createdAt,
-        LocalDateTime updatedAt
+        LocalDateTime updatedAt,
+        ReminderDto reminder
 ){
     public static InsightDto from(Insight insight){
         return InsightDto.builder()

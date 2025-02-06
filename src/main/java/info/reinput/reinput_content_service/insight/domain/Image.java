@@ -16,6 +16,7 @@ import java.util.List;
 @Builder
 @Table(name = "image")
 public class Image {
+    private final static String S3_URL = "https://static.reinput.info/";
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id")
     private Long id;
@@ -34,7 +35,9 @@ public class Image {
     }
 
     public static List<Image> of(List<String> imagePaths, Insight insight){
+        //if start with S3_URL, remove it
         return imagePaths.stream()
+                .map(path -> path.startsWith(S3_URL) ? path.substring(S3_URL.length()) : path)
                 .map(path -> Image.builder()
                         .imagePath(path)
                         .insight(insight)
@@ -43,6 +46,6 @@ public class Image {
     }
 
     public String getPublicUrl(){
-        return String.format("https://static.reinput.info/%s", imagePath);
+        return String.format("%s%s", S3_URL, imagePath);
     }
 }
