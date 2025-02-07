@@ -23,5 +23,11 @@ public class InsightSummary {
                 .mainImagePath(mainImagePath)
                 .build();
     }
+
+    public void update(InsightSummary summary) {
+        this.title = summary.title != null ? summary.title : this.title;
+        this.AISummary = summary.AISummary != null ? summary.AISummary : this.AISummary;
+        this.mainImagePath = summary.mainImagePath != null ? summary.mainImagePath : this.mainImagePath;
+    }
 }
 
