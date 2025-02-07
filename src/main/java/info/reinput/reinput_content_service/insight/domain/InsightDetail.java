@@ -28,5 +28,12 @@ public class InsightDetail {
                 .lastViewedAt(LocalDateTime.now())
                 .build();
     }
+
+    public void update(InsightDetail detail) {
+        this.url = detail.url != null ? detail.url : this.url;
+        this.memo = detail.memo != null ? detail.memo : this.memo;
+        this.source = detail.source != null ? detail.source : this.source;
+        this.lastViewedAt = LocalDateTime.now();
+    }
 }
 

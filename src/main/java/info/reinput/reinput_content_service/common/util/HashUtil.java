@@ -1,4 +1,4 @@
-package info.reinput.reinput_content_service.util;
+package info.reinput.reinput_content_service.common.util;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

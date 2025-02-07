@@ -3,6 +3,7 @@ package info.reinput.reinput_content_service.insight.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -44,6 +45,29 @@ public class Insight {
 
     public static InsightDetail createDetail(String url, String memo,String source) {
         return InsightDetail.of(url, memo, source);
+    }
+
+    public void update(InsightSummary summary, InsightDetail detail, List<String> images, List<String> hashTags) {
+        this.summary.update(summary);
+        this.detail.update(detail);
+
+        // 기존 images에서 삭제되지 않을 이미지 필터링
+        List<Image> existingImages = this.images.stream()
+                .filter(image -> images.contains(image.getImagePath()))
+                .toList();
+
+        // 새롭게 추가해야 할 이미지
+        List<String> newImagePaths = images.stream()
+                .filter(imagePath -> this.images.stream().noneMatch(image -> image.getImagePath().equals(imagePath))) // 기존에 없는 이미지만 필터링
+                .toList();
+
+        List<Image> newImages = Image.of(newImagePaths, this);
+
+        // 기존 이미지 + 새로 추가된 이미지
+        this.images = new ArrayList<>(existingImages);
+        this.images.addAll(newImages);
+
+        this.hashTags = HashTag.of(hashTags, this);
     }
 
     public static Insight createInsight(
