@@ -4,6 +4,7 @@ import info.reinput.reinput_content_service.application.InsightService;
 import info.reinput.reinput_content_service.application.dto.InsightCountCollection;
 import info.reinput.reinput_content_service.application.dto.InsightDto;
 import info.reinput.reinput_content_service.application.dto.InsightSummaryCollection;
+import info.reinput.reinput_content_service.application.dto.ReminderDto;
 import info.reinput.reinput_content_service.infra.InsightRepository;
 import info.reinput.reinput_content_service.infra.client.WorkspaceClientAdapter;
 import info.reinput.reinput_content_service.insight.domain.Insight;
