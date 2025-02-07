@@ -48,4 +48,39 @@ public record ReminderDto(
             case DEFAULT -> List.of(ReminderServiceType.Recommended);
         };
     }
+
+    public List<Integer> reminderDaysFromServiceTypes(List<ReminderServiceType> serviceTypes) {
+        if (serviceTypes == null || serviceTypes.isEmpty()) {
+            return List.of();
+        }
+        return switch (reminderType) {
+            case MONTH -> serviceTypes.stream()
+                    .map(serviceType -> {
+                        // enum 이름은 "Monthly_1", "Monthly_2", ... 형식이라고 가정
+                        String name = serviceType.name();
+                        // "Monthly_" 접두사 길이만큼 substring
+                        try {
+                            return Integer.parseInt(name.substring("Monthly_".length()));
+                        } catch (NumberFormatException e) {
+                            return null;
+                        }
+                    })
+                    .filter(Objects::nonNull)
+                    .toList();
+            case WEEK -> serviceTypes.stream()
+                    .map(serviceType -> switch (serviceType) {
+                        case Weekly_Mon -> 1;
+                        case Weekly_Tue -> 2;
+                        case Weekly_Wed -> 3;
+                        case Weekly_Thu -> 4;
+                        case Weekly_Fri -> 5;
+                        case Weekly_Sat -> 6;
+                        case Weekly_Sun -> 7;
+                        default -> null;
+                    })
+                    .filter(Objects::nonNull)
+                    .toList();
+            case DEFAULT -> List.of(); // 기본(Default)인 경우, 정수 값이 없으므로 빈 리스트 반환
+        };
+    }
 }
