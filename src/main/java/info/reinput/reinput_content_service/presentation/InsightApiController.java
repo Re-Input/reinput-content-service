@@ -4,6 +4,7 @@ import info.reinput.reinput_content_service.application.InsightService;
 import info.reinput.reinput_content_service.application.dto.InsightCountCollection;
 import info.reinput.reinput_content_service.application.dto.InsightSummaryCollection;
 import info.reinput.reinput_content_service.presentation.dto.req.InsightCreateReq;
+import info.reinput.reinput_content_service.presentation.dto.req.InsightPatchReq;
 import info.reinput.reinput_content_service.presentation.dto.res.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -67,8 +68,8 @@ public class InsightApiController {
     }
 
 
-    @Operation(summary = "[208] [미완성]Save Image",
-            description = "이미지를 저장합니다. Reminder 관련 서비스와 연동되어 있지 않습니다.")
+    @Operation(summary = "[208] Save Insight",
+            description = "인사이트를 저장합니다.")
     @PostMapping("/v1")
     public ResponseEntity<ApiResponse<InsightRes>> saveImage(
             @Parameter(hidden = true) @RequestHeader("X-User-Id") final Long memberId,
@@ -82,5 +83,22 @@ public class InsightApiController {
                 .build();
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "[209] Edit Insight",
+            description = "인사이트를 수정합니다. 기존 이미지에서 추가된 이미지가 반영됩니다. 별도로 이미지가 삭제되지 않습니다.")
+    @PatchMapping("/v1")
+    public ResponseEntity<ApiResponse<InsightRes>> patchInsight(
+            @Parameter(hidden = true) @RequestHeader("X-User-Id") final Long memberId,
+            @RequestBody final InsightPatchReq insightPatchReq) {
+        log.info("[patchInsight] insightPatchReq memberId: {}", memberId);
+
+        ApiResponse<InsightRes> response = ApiResponse.<InsightRes>builder()
+                .status(200)
+                .message("Insight edited")
+                .data(InsightRes.from(insightService.editInsight(insightPatchReq.toDto(), memberId)))
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
