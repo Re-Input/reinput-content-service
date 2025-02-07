@@ -1,6 +1,6 @@
 package info.reinput.reinput_content_service.insight.domain;
 
-import info.reinput.reinput_content_service.util.S3FilePathUtil;
+import info.reinput.reinput_content_service.common.util.S3FilePathUtil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

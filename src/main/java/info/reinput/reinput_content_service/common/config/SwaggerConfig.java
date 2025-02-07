@@ -1,4 +1,4 @@
-package info.reinput.reinput_content_service.config;
+package info.reinput.reinput_content_service.common.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
