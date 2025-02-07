@@ -47,4 +47,25 @@ public record InsightDto (
                 .updatedAt(insight.getTimeAudit().getUpdatedAt())
                 .build();
     }
+
+    public static InsightDto from(Insight insight, ReminderDto reminderDto){
+        return InsightDto.builder()
+                .id(insight.getId())
+                .title(insight.getSummary().getTitle())
+                .AISummary(insight.getSummary().getAISummary())
+                .mainImagePath(insight.getSummary().getMainImagePath())
+                .url(insight.getDetail().getUrl())
+                .memo(insight.getDetail().getMemo())
+                .viewCount(insight.getDetail().getViewCount())
+                .source(insight.getDetail().getSource())
+                .lastViewedAt(insight.getDetail().getLastViewedAt())
+                .hashTags(insight.getHashTags().stream().map(HashTag::getName).toList())
+                .images(insight.getImages().stream().map(Image::getImagePath).toList())
+                .folderId(insight.getFolderId())
+                .memberId(insight.getMemberId())
+                .createdAt(insight.getTimeAudit().getCreatedAt())
+                .updatedAt(insight.getTimeAudit().getUpdatedAt())
+                .reminder(reminderDto)
+                .build();
+    }
 }
