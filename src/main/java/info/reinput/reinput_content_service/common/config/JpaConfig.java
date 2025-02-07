@@ -1,4 +1,4 @@
-package info.reinput.reinput_content_service.config;
+package info.reinput.reinput_content_service.common.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

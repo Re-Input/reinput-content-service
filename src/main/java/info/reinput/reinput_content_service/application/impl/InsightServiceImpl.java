@@ -51,6 +51,26 @@ public class InsightServiceImpl implements InsightService {
 
     @Transactional
     @Override
+    public InsightDto editInsight(final InsightDto insightDto, final Long memberId) {
+        log.info("[InsightService.editInsight] insightDto : {}", insightDto);
+
+        //todo : reminder : check if exist & save reminder in notification service
+
+        Insight insight = insightRepository.findById(insightDto.id())
+                .orElseThrow(() -> new IllegalArgumentException("Insight not found"));
+
+        insight.update(
+                Insight.createSummary(insightDto.title(), insightDto.AISummary(), insightDto.mainImagePath()),
+                Insight.createDetail(insightDto.url(), insightDto.memo(), insightDto.source()),
+                insightDto.images(),
+                insightDto.hashTags()
+        );
+
+        return InsightDto.from(insight);
+    }
+
+    @Transactional
+    @Override
     public InsightDto saveInsight(final InsightDto insightDto, final Long memberId) {
         log.info("[InsightService.saveInsight] insightDto : {}", insightDto);
 
