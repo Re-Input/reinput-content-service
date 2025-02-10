@@ -6,6 +6,7 @@ import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import info.reinput.reinput_content_service.application.dto.InsightSummaryDto;
 import info.reinput.reinput_content_service.infra.InsightRepositoryCustom;
+import info.reinput.reinput_content_service.insight.domain.Insight;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,7 @@ import static com.querydsl.core.types.Projections.constructor;
 import static com.querydsl.core.types.Projections.list;
 import static info.reinput.reinput_content_service.insight.domain.QHashTag.hashTag;
 import static info.reinput.reinput_content_service.insight.domain.QInsight.insight;
+import static org.hibernate.query.results.Builders.fetch;
 
 @Repository
 @RequiredArgsConstructor
@@ -45,6 +47,17 @@ public class InsightRepositoryCustomImpl implements InsightRepositoryCustom {
                         tuple -> Optional.ofNullable(tuple.get(Wildcard.count)).orElse(0L),
                         Long::sum
                 ));
+    }
+
+    @Override
+    public List<Insight> searchInsight(final String keyword) {
+        return queryFactory.selectFrom(insight)
+                .leftJoin(hashTag).on(hashTag.insight.id.eq(insight.id))
+                .where(insight.summary.title.contains(keyword)
+                        .or(insight.summary.AISummary.contains(keyword))
+                        .or(hashTag.name.contains(keyword))
+                        .or(insight.detail.memo.contains(keyword)))
+                .fetch();
     }
 
     @Override

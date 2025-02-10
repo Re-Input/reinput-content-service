@@ -1,10 +1,7 @@
 package info.reinput.reinput_content_service.application.impl;
 
 import info.reinput.reinput_content_service.application.InsightService;
-import info.reinput.reinput_content_service.application.dto.InsightCountCollection;
-import info.reinput.reinput_content_service.application.dto.InsightDto;
-import info.reinput.reinput_content_service.application.dto.InsightSummaryCollection;
-import info.reinput.reinput_content_service.application.dto.ReminderDto;
+import info.reinput.reinput_content_service.application.dto.*;
 import info.reinput.reinput_content_service.infra.InsightRepository;
 import info.reinput.reinput_content_service.infra.client.NotificationClientAdapter;
 import info.reinput.reinput_content_service.infra.client.WorkspaceClientAdapter;
@@ -70,6 +67,16 @@ public class InsightServiceImpl implements InsightService {
         );
 
         return InsightDto.from(insight, reminderDto);
+    }
+
+    @Override
+    public InsightSummaryCollection searchInsight(final String keyword, final Long memberId) {
+        log.info("[InsightService.searchInsight] keyword : {}, memberId : {}", keyword, memberId);
+
+        List<Insight> insights = insightRepository.searchInsight(keyword);
+        Insight.sortInsightsInPlace(insights, keyword);
+
+        return InsightSummaryCollection.from(insights);
     }
 
     @Transactional
