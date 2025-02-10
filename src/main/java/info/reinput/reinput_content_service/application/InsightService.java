@@ -3,9 +3,9 @@ package info.reinput.reinput_content_service.application;
 import info.reinput.reinput_content_service.application.dto.InsightCountCollection;
 import info.reinput.reinput_content_service.application.dto.InsightDto;
 import info.reinput.reinput_content_service.application.dto.InsightSummaryCollection;
+import info.reinput.reinput_content_service.application.dto.InsightSummaryDto;
 
 import java.util.List;
-import java.util.Map;
 
 public interface InsightService {
     Long countInsight(final Long folderId, final Long memberId);
@@ -14,6 +14,6 @@ public interface InsightService {
     InsightDto editInsight(final InsightDto insightDto, final Long memberId);
     InsightDto saveInsight(final InsightDto insightDto, final Long memberId);
     InsightSummaryCollection getSharedInsightSummaries(final String shareId, final Long memberId);
-    InsightSummaryCollection searchInsight(final Long folderId, final String keyword, final Long memberId);
+    List<InsightSummaryDto> searchInsight(final String keyword, final Long memberId);
     InsightSummaryCollection searchInsightByTag(final Long folderId, final String tag, final Long memberId);
 }

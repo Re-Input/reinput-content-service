@@ -3,8 +3,6 @@ package info.reinput.reinput_content_service.application.dto;
 import info.reinput.reinput_content_service.insight.domain.Insight;
 import lombok.Builder;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @Builder
