@@ -72,6 +72,13 @@ public class InsightServiceImpl implements InsightService {
         return InsightDto.from(insight, reminderDto);
     }
 
+    @Override
+    public InsightSummaryCollection searchInsight(final Long folderId, final String keyword, final Long memberId) {
+        log.info("[InsightService.searchInsight] folderId : {}, keyword : {}, memberId : {}", folderId, keyword, memberId);
+
+        List<Insight> insights = insightRepository.searchInsight(folderId, keyword);
+    }
+
     @Transactional
     @Override
     public InsightDto saveInsight(final InsightDto insightDto, final Long memberId) {
