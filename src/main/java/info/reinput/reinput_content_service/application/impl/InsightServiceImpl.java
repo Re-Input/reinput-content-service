@@ -77,6 +77,14 @@ public class InsightServiceImpl implements InsightService {
         log.info("[InsightService.searchInsight] folderId : {}, keyword : {}, memberId : {}", folderId, keyword, memberId);
 
         List<Insight> insights = insightRepository.searchInsight(folderId, keyword);
+
+        // 순서 정렬 필요 title, AISummary, hashTag, memo순
+
+        Insight.sortInsightsInPlace(insights, keyword);
+
+        return InsightSummaryCollection.builder()
+                .insightSummaries(InsightSummaryCollection.from(insights))
+                .build();
     }
 
     @Transactional
