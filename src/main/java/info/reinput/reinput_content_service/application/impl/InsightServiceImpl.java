@@ -70,7 +70,7 @@ public class InsightServiceImpl implements InsightService {
     }
 
     @Override
-    public List<InsightSummaryDto> searchInsight(final String keyword, final Long memberId) {
+    public InsightSummaryCollection searchInsight(final String keyword, final Long memberId) {
         log.info("[InsightService.searchInsight] keyword : {}, memberId : {}", keyword, memberId);
 
         List<Insight> insights = insightRepository.searchInsight(keyword);
