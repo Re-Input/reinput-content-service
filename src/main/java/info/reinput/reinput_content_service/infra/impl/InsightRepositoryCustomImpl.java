@@ -12,6 +12,9 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.querydsl.core.group.GroupBy.groupBy;
+import static com.querydsl.core.types.Projections.constructor;
+import static com.querydsl.core.types.Projections.list;
 import static info.reinput.reinput_content_service.insight.domain.QHashTag.hashTag;
 import static info.reinput.reinput_content_service.insight.domain.QInsight.insight;
 
@@ -80,7 +83,28 @@ public class InsightRepositoryCustomImpl implements InsightRepositoryCustom {
         return new ArrayList<>(insightMap.values());
     }
 
+    @Override
+    public List<InsightSummaryDto> searchInsightByTag(final Long folderId, final String tag) {
 
+        List<InsightSummaryDto> results = queryFactory
+                .from(insight)
+                .leftJoin(hashTag).on(hashTag.insight.id.eq(insight.id))
+                .where(insight.folderId.eq(folderId)
+                        .and(hashTag.name.eq(tag)))
+                .transform(
+                        groupBy(insight.id).list(
+                                constructor(InsightSummaryDto.class,
+                                        insight.id,
+                                        insight.summary.title,
+                                        insight.summary.AISummary,
+                                        insight.summary.mainImagePath,
+                                        list(hashTag.name)
+                                )
+                        )
+                );
+
+        return results;
+    }
 
 
 }
