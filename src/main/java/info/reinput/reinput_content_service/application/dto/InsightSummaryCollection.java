@@ -17,9 +17,11 @@ public record InsightSummaryCollection (
                 .build();
     }
 
-    public static List<InsightSummaryDto> from(List<Insight> insights) {
-        return insights.stream()
-                .map(InsightSummaryDto::of)
-                .toList();
+    public static InsightSummaryCollection from(List<Insight> insights) {
+        return InsightSummaryCollection.builder()
+                .insightSummaries(insights.stream()
+                        .map(InsightSummaryDto::of)
+                        .toList())
+                .build();
     }
 }

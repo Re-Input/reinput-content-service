@@ -14,6 +14,6 @@ public interface InsightService {
     InsightDto editInsight(final InsightDto insightDto, final Long memberId);
     InsightDto saveInsight(final InsightDto insightDto, final Long memberId);
     InsightSummaryCollection getSharedInsightSummaries(final String shareId, final Long memberId);
-    List<InsightSummaryDto> searchInsight(final String keyword, final Long memberId);
+    InsightSummaryCollection searchInsight(final String keyword, final Long memberId);
     InsightSummaryCollection searchInsightByTag(final Long folderId, final String tag, final Long memberId);
 }
