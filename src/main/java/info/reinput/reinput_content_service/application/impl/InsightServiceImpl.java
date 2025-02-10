@@ -89,6 +89,16 @@ public class InsightServiceImpl implements InsightService {
         )), reminderDto);
     }
 
+    @Override
+    public InsightSummaryCollection searchInsightByTag(final Long folderId, final String tag, final Long memberId) {
+        log.info("[InsightService.searchInsightByTags] folderId : {}, tag : {}, memberId : {}", folderId, tag, memberId);
+
+        return InsightSummaryCollection.builder()
+                .insightSummaries(insightRepository.searchInsightByTag(folderId, tag))
+                .build();
+    }
+
+
     private ReminderDto saveReminder(final ReminderDto reminderDto) {
         return notificationClientAdapter.saveReminder(reminderDto);
     }
