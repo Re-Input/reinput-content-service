@@ -102,6 +102,25 @@ public class InsightApiController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Operation(summary = "[209] Search Insight",
+            description = "키워드로 Insight를 검색합니다.")
+    @GetMapping("/search/{keyword}/v1")
+    public ResponseEntity<ApiResponse<InsightSummaryCollection>> searchInsight(
+            @PathVariable final String keyword,
+            @Parameter(hidden = true) @RequestHeader("X-User-Id") final Long memberId) {
+        log.info("[searchInsight] keyword: {}, memberId: {}", keyword, memberId);
+
+        ApiResponse<InsightSummaryCollection> response = ApiResponse.<InsightSummaryCollection>builder()
+                .status(HttpStatus.OK.value())
+                .message("Success search insight")
+                .data(insightService.searchInsight(keyword, memberId))
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+
     @Operation(summary = "[212] Search Insight by Tag",
             description = "태그로 Insight를 검색합니다.")
     @GetMapping("/search/{folderId}/{tag}")
@@ -113,7 +132,7 @@ public class InsightApiController {
 
         ApiResponse<InsightSummaryCollection> response = ApiResponse.<InsightSummaryCollection>builder()
                 .status(HttpStatus.OK.value())
-                .message("Success search insight by tag")
+                .message("Success search insight")
                 .data(insightService.searchInsightByTag(folderId, tag, memberId))
                 .build();
 

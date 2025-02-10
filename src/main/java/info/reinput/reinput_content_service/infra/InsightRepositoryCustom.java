@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface InsightRepositoryCustom {
     Long countByFolderId(final Long folderId);
-    List<Insight> searchInsight(final Long folderId, final String keyword);
+    List<Insight> searchInsight(final String keyword);
     Map<Long, Long> countByFolderIds(final List<Long> folderIds);
     List<InsightSummaryDto> getInsightSummaries(final Long folderId);
     List<InsightSummaryDto> searchInsightByTag(final Long folderId, final String tag);

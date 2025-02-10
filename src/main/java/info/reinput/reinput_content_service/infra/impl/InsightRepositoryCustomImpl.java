@@ -50,15 +50,13 @@ public class InsightRepositoryCustomImpl implements InsightRepositoryCustom {
     }
 
     @Override
-    public List<Insight> searchInsight(final Long folderId, final String keyword) {
+    public List<Insight> searchInsight(final String keyword) {
         return queryFactory.selectFrom(insight)
                 .leftJoin(hashTag).on(hashTag.insight.id.eq(insight.id))
-                .where(insight.folderId.eq(folderId)
-                        .and(insight.summary.title.contains(keyword)
-                                .or(insight.summary.AISummary.contains(keyword))
-                                .or(insight.summary.title.contains(keyword))
-                                .or(hashTag.name.contains(keyword))
-                                .or(insight.detail.memo.contains(keyword))))
+                .where(insight.summary.title.contains(keyword)
+                        .or(insight.summary.AISummary.contains(keyword))
+                        .or(hashTag.name.contains(keyword))
+                        .or(insight.detail.memo.contains(keyword)))
                 .fetch();
     }
 
