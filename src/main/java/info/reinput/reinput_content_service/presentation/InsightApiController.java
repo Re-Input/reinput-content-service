@@ -101,4 +101,22 @@ public class InsightApiController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @Operation(summary = "[212] Search Insight by Tag",
+            description = "태그로 Insight를 검색합니다.")
+    @GetMapping("/search/{folderId}/{tag}")
+    public ResponseEntity<ApiResponse<InsightSummaryCollection>> searchInsightByTag(
+            @PathVariable final Long folderId,
+            @PathVariable final String tag,
+            @Parameter(hidden = true) @RequestHeader("X-User-Id") final Long memberId) {
+        log.info("[searchInsightByTag] folderId: {}, tag: {}, memberId: {}", folderId, tag, memberId);
+
+        ApiResponse<InsightSummaryCollection> response = ApiResponse.<InsightSummaryCollection>builder()
+                .status(HttpStatus.OK.value())
+                .message("Success search insight by tag")
+                .data(insightService.searchInsightByTag(folderId, tag, memberId))
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
