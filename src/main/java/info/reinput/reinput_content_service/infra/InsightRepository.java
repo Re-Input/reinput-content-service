@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface InsightRepository extends JpaRepository<Insight, Long>, InsightRepositoryCustom {
 
+    @Query("SELECT i FROM Insight i left join fetch i.hashTags h left join fetch i.images WHERE i.folderId = :folderId")
+    List<Insight> findByFolderId(Long folderId);
 }
