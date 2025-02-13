@@ -125,6 +125,18 @@ public class Insight {
         return (detail != null && detail.getMemo() != null) ? detail.getMemo() : "";
     }
 
+    public Insight copy(Insight insight, Long folderId, Long memberId) {
+        return Insight.builder()
+                .summary(insight.getSummary())
+                .images(insight.getImages())
+                .detail(insight.getDetail())
+                .hashTags(insight.getHashTags())
+                .folderId(folderId)
+                .memberId(memberId)
+                .timeAudit(TimeAudit.of())
+                .build();
+    }
+
     /**
      * 주어진 Insight 리스트를 제목, AI 요약,
      * "키워드가 포함된 해시태그" (존재하면 해당 해시태그, 없으면 빈 문자열),

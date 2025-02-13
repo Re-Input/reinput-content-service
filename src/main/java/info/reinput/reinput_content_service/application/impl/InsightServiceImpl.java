@@ -105,6 +105,21 @@ public class InsightServiceImpl implements InsightService {
                 .build();
     }
 
+    @Override
+    public Integer copyInsight(final Long folderId, final Long memberId) {
+        log.info("[InsightService.copyInsight] folderId : {}, memberId : {}", folderId, memberId);
+
+        List<Insight> insights = insightRepository.findByFolderId(folderId);
+
+        List<Insight> copiedInsights = insights.stream()
+                .map(insight -> insight.copy(insight, folderId, memberId))
+                .toList();
+
+        insightRepository.saveAll(copiedInsights);
+
+        return copiedInsights.size();
+    }
+
 
     private ReminderDto saveReminder(final ReminderDto reminderDto) {
         return notificationClientAdapter.saveReminder(reminderDto);
