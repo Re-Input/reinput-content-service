@@ -142,12 +142,12 @@ public class InsightApiController {
     @Operation(summary = "시스템 연동용 copy insights",
             description = "copy insights")
     @GetMapping("/copy/{folderId}")
-    public ResponseEntity<ApiResponse<Integer>> copyInsight(
+    public ResponseEntity<ApiResponse<Long>> copyInsight(
             @PathVariable final Long folderId,
             @Parameter(hidden = true) @RequestHeader("X-User-Id") final Long memberId) {
         log.info("[copyInsight] folderId: {}, memberId: {}", folderId, memberId);
 
-        ApiResponse<Integer> response = ApiResponse.<Integer>builder()
+        ApiResponse<Long> response = ApiResponse.<Long>builder()
                 .status(HttpStatus.OK.value())
                 .message("Success copy insight")
                 .data(insightService.copyInsight(folderId, memberId))
