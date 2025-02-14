@@ -49,6 +49,13 @@ public class InsightServiceImpl implements InsightService {
 
     }
 
+    @Override
+    public List<Long> getInsightIdsByMemberId(final Long memberId) {
+        log.info("[InsightService.getInsightIdsByMemberId] memberId : {}", memberId);
+
+        return insightRepository.getInsightIdsByMemberId(memberId);
+    }
+
     @Transactional
     @Override
     public InsightDto editInsight(final InsightDto insightDto, final Long memberId) {

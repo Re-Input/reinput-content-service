@@ -119,5 +119,13 @@ public class InsightRepositoryCustomImpl implements InsightRepositoryCustom {
         return results;
     }
 
+    @Override
+    public List<Long> getInsightIdsByMemberId(Long memberId) {
+        return queryFactory.select(insight.id)
+                .from(insight)
+                .where(insight.memberId.eq(memberId))
+                .fetch();
+    }
+
 
 }

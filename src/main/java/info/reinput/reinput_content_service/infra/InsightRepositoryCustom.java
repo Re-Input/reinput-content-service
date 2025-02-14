@@ -12,4 +12,5 @@ public interface InsightRepositoryCustom {
     Map<Long, Long> countByFolderIds(final List<Long> folderIds);
     List<InsightSummaryDto> getInsightSummaries(final Long folderId);
     List<InsightSummaryDto> searchInsightByTag(final Long folderId, final String tag);
+    List<Long> getInsightIdsByMemberId(Long memberId);
 }
