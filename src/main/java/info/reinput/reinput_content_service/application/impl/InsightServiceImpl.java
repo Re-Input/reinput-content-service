@@ -127,6 +127,13 @@ public class InsightServiceImpl implements InsightService {
         return (long) copiedInsights.size();
     }
 
+    @Override
+    public InsightSummaryCollection getInsightSummariesByInsightIds(final List<Long> insightIds, final Long memberId) {
+        log.info("[InsightService.getInsightSummariesByInsightIds] insightIds : {}, memberId : {}", insightIds, memberId);
+
+        return InsightSummaryCollection.fromDto(insightRepository.getInsightSummariesByInsightIds(insightIds));
+    }
+
 
     private ReminderDto saveReminder(final ReminderDto reminderDto) {
         return notificationClientAdapter.saveReminder(reminderDto);
