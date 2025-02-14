@@ -13,4 +13,5 @@ public interface InsightRepositoryCustom {
     List<InsightSummaryDto> getInsightSummaries(final Long folderId);
     List<InsightSummaryDto> searchInsightByTag(final Long folderId, final String tag);
     List<Long> getInsightIdsByMemberId(Long memberId);
+    List<InsightSummaryDto> getInsightSummariesByInsightIds(List<Long> insightIds);
 }

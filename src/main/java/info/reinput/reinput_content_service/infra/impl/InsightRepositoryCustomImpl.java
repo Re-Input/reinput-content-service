@@ -127,5 +127,25 @@ public class InsightRepositoryCustomImpl implements InsightRepositoryCustom {
                 .fetch();
     }
 
-
+    @Override
+    public List<InsightSummaryDto> getInsightSummariesByInsightIds(List<Long> insightIds) {
+        Map<Long, InsightSummaryDto> resultMap = queryFactory
+                .select(insight.id, insight.summary.title, insight.summary.AISummary,
+                        insight.summary.mainImagePath, hashTag.name)
+                .from(insight)
+                .leftJoin(hashTag).on(hashTag.insight.id.eq(insight.id))
+                .where(insight.id.in(insightIds))
+                .transform(
+                        groupBy(insight.id).as(
+                                constructor(InsightSummaryDto.class,
+                                        insight.id,
+                                        insight.summary.title,
+                                        insight.summary.AISummary,
+                                        insight.summary.mainImagePath,
+                                        list(hashTag.name)
+                                )
+                        )
+                );
+        return new ArrayList<>(resultMap.values());
+    }
 }
