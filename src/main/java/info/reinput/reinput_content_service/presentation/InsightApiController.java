@@ -139,6 +139,23 @@ public class InsightApiController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Operation(summary = "시스템 연동용 get insightIds by memberId",
+            description = "get insightIds by memberId")
+    @GetMapping("/ids/{memberId}")
+    public ResponseEntity<ApiResponse<List<Long>>> getInsightIdsByMemberId(
+            @PathVariable final Long memberId) {
+        log.info("[getInsightIdsByMemberId] memberId: {}", memberId);
+
+        ApiResponse<List<Long>> response = ApiResponse.<List<Long>>builder()
+                .status(HttpStatus.OK.value())
+                .message("Success get insightIds")
+                .data(insightService.getInsightIdsByMemberId(memberId))
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
     @Operation(summary = "시스템 연동용 copy insights",
             description = "copy insights")
     @GetMapping("/copy/{folderId}")
