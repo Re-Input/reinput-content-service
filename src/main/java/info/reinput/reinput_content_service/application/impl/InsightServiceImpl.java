@@ -106,7 +106,7 @@ public class InsightServiceImpl implements InsightService {
     }
 
     @Override
-    public Integer copyInsight(final Long folderId, final Long memberId) {
+    public Long copyInsight(final Long folderId, final Long memberId) {
         log.info("[InsightService.copyInsight] folderId : {}, memberId : {}", folderId, memberId);
 
         List<Insight> insights = insightRepository.findByFolderId(folderId);
@@ -117,7 +117,7 @@ public class InsightServiceImpl implements InsightService {
 
         insightRepository.saveAll(copiedInsights);
 
-        return copiedInsights.size();
+        return (long) copiedInsights.size();
     }
 
 
