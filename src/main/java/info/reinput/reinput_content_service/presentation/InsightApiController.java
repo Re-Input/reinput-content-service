@@ -172,4 +172,21 @@ public class InsightApiController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @Operation(summary = "시스템 연동용 get insight summaries by insightIds",
+            description = "get insight summaries by insightIds")
+    @GetMapping("/summaries/{insightIds}")
+    public ResponseEntity<ApiResponse<InsightSummaryCollection>> getInsightSummariesByInsightIds(
+            @PathVariable final List<Long> insightIds,
+            @Parameter(hidden = true) @RequestHeader("X-User-Id") final Long memberId) {
+        log.info("[getInsightSummariesByInsightIds] insightIds: {}, memberId: {}", insightIds, memberId);
+
+        ApiResponse<InsightSummaryCollection> response = ApiResponse.<InsightSummaryCollection>builder()
+                .status(HttpStatus.OK.value())
+                .message("Success get insight summaries")
+                .data(insightService.getInsightSummariesByInsightIds(insightIds, memberId))
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
