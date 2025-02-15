@@ -120,6 +120,16 @@ public class InsightServiceImpl implements InsightService {
         return (long) copiedInsights.size();
     }
 
+    @Override
+    public InsightDto getInsight(final Long insightId, final Long memberId) {
+        log.info("[InsightService.getInsight] insightId : {}, memberId : {}", insightId, memberId);
+
+        Insight insight = insightRepository.findById(insightId)
+                .orElseThrow(() -> new IllegalArgumentException("Insight not found"));
+
+        return InsightDto.from(insight, null);
+    }
+
 
     private ReminderDto saveReminder(final ReminderDto reminderDto) {
         return notificationClientAdapter.saveReminder(reminderDto);
