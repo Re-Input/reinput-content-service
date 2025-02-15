@@ -128,6 +128,16 @@ public class InsightServiceImpl implements InsightService {
     }
 
     @Override
+    public InsightDto getInsight(final Long insightId, final Long memberId) {
+        log.info("[InsightService.getInsight] insightId : {}, memberId : {}", insightId, memberId);
+
+        Insight insight = insightRepository.findById(insightId)
+                .orElseThrow(() -> new IllegalArgumentException("Insight not found"));
+
+        return InsightDto.from(insight, null);
+    }
+  
+    @Override
     public InsightSummaryCollection getInsightSummariesByInsightIds(final List<Long> insightIds, final Long memberId) {
         log.info("[InsightService.getInsightSummariesByInsightIds] insightIds : {}, memberId : {}", insightIds, memberId);
 

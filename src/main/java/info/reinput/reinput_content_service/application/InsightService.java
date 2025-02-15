@@ -18,5 +18,6 @@ public interface InsightService {
     InsightSummaryCollection searchInsight(final String keyword, final Long memberId);
     InsightSummaryCollection searchInsightByTag(final Long folderId, final String tag, final Long memberId);
     Long copyInsight(final Long folderId, final Long memberId);
+    InsightDto getInsight(final Long insightId, final Long memberId);
     InsightSummaryCollection getInsightSummariesByInsightIds(final List<Long> insightIds, final Long memberId);
 }

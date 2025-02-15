@@ -6,6 +6,7 @@ import info.reinput.reinput_content_service.application.dto.InsightSummaryCollec
 import info.reinput.reinput_content_service.presentation.dto.req.InsightCreateReq;
 import info.reinput.reinput_content_service.presentation.dto.req.InsightPatchReq;
 import info.reinput.reinput_content_service.presentation.dto.res.ApiResponse;
+import info.reinput.reinput_content_service.presentation.dto.res.InsightViewRes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
@@ -138,7 +139,22 @@ public class InsightApiController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @Operation(summary = "시스템 연동용 viewed Insights",
+            description = "viewed insights")
+    @GetMapping("/viewed/{insightId}")
+    public ResponseEntity<ApiResponse<InsightViewRes>> viewedInsight(
+            @PathVariable final Long insightId,
+            @Parameter(hidden = true) @RequestHeader("X-User-Id") final Long memberId) {
+        log.info("[viewedInsight] insightId: {}, memberId: {}", insightId, memberId);
 
+        ApiResponse<InsightViewRes> response = ApiResponse.<InsightViewRes>builder()
+                .status(HttpStatus.OK.value())
+                .message("Success viewed insight")
+                .data(InsightViewRes.from(insightService.getInsight(insightId, memberId)))
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+  
     @Operation(summary = "시스템 연동용 get insightIds by memberId",
             description = "get insightIds by memberId")
     @GetMapping("/ids/{memberId}")
@@ -154,7 +170,6 @@ public class InsightApiController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 
     @Operation(summary = "시스템 연동용 copy insights",
             description = "copy insights")
