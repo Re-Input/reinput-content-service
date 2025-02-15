@@ -139,7 +139,6 @@ public class InsightApiController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
     @Operation(summary = "시스템 연동용 viewed Insights",
             description = "viewed insights")
     @GetMapping("/viewed/{insightId}")
@@ -153,9 +152,25 @@ public class InsightApiController {
                 .message("Success viewed insight")
                 .data(InsightViewRes.from(insightService.getInsight(insightId, memberId)))
                 .build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+  
+    @Operation(summary = "시스템 연동용 get insightIds by memberId",
+            description = "get insightIds by memberId")
+    @GetMapping("/ids/{memberId}")
+    public ResponseEntity<ApiResponse<List<Long>>> getInsightIdsByMemberId(
+            @PathVariable final Long memberId) {
+        log.info("[getInsightIdsByMemberId] memberId: {}", memberId);
+
+        ApiResponse<List<Long>> response = ApiResponse.<List<Long>>builder()
+                .status(HttpStatus.OK.value())
+                .message("Success get insightIds")
+                .data(insightService.getInsightIdsByMemberId(memberId))
+                .build();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
     @Operation(summary = "시스템 연동용 copy insights",
             description = "copy insights")
     @GetMapping("/copy/{folderId}")
@@ -168,6 +183,23 @@ public class InsightApiController {
                 .status(HttpStatus.OK.value())
                 .message("Success copy insight")
                 .data(insightService.copyInsight(folderId, memberId))
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Operation(summary = "시스템 연동용 get insight summaries by insightIds",
+            description = "get insight summaries by insightIds")
+    @GetMapping("/summaries/{insightIds}")
+    public ResponseEntity<ApiResponse<InsightSummaryCollection>> getInsightSummariesByInsightIds(
+            @PathVariable final List<Long> insightIds,
+            @Parameter(hidden = true) @RequestHeader("X-User-Id") final Long memberId) {
+        log.info("[getInsightSummariesByInsightIds] insightIds: {}, memberId: {}", insightIds, memberId);
+
+        ApiResponse<InsightSummaryCollection> response = ApiResponse.<InsightSummaryCollection>builder()
+                .status(HttpStatus.OK.value())
+                .message("Success get insight summaries")
+                .data(insightService.getInsightSummariesByInsightIds(insightIds, memberId))
                 .build();
 
         return new ResponseEntity<>(response, HttpStatus.OK);

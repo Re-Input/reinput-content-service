@@ -49,6 +49,13 @@ public class InsightServiceImpl implements InsightService {
 
     }
 
+    @Override
+    public List<Long> getInsightIdsByMemberId(final Long memberId) {
+        log.info("[InsightService.getInsightIdsByMemberId] memberId : {}", memberId);
+
+        return insightRepository.getInsightIdsByMemberId(memberId);
+    }
+
     @Transactional
     @Override
     public InsightDto editInsight(final InsightDto insightDto, final Long memberId) {
@@ -128,6 +135,13 @@ public class InsightServiceImpl implements InsightService {
                 .orElseThrow(() -> new IllegalArgumentException("Insight not found"));
 
         return InsightDto.from(insight, null);
+    }
+  
+    @Override
+    public InsightSummaryCollection getInsightSummariesByInsightIds(final List<Long> insightIds, final Long memberId) {
+        log.info("[InsightService.getInsightSummariesByInsightIds] insightIds : {}, memberId : {}", insightIds, memberId);
+
+        return InsightSummaryCollection.fromDto(insightRepository.getInsightSummariesByInsightIds(insightIds));
     }
 
 

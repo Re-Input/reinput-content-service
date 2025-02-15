@@ -10,6 +10,7 @@ import java.util.List;
 public interface InsightService {
     Long countInsight(final Long folderId, final Long memberId);
     InsightCountCollection countInsight(final List<Long> folderIds, final Long memberId);
+    List<Long> getInsightIdsByMemberId(final Long memberId);
     //InsightSummaryCollection getInsightSummaries(final Long folderId, final Long memberId);
     InsightDto editInsight(final InsightDto insightDto, final Long memberId);
     InsightDto saveInsight(final InsightDto insightDto, final Long memberId);
@@ -18,4 +19,5 @@ public interface InsightService {
     InsightSummaryCollection searchInsightByTag(final Long folderId, final String tag, final Long memberId);
     Long copyInsight(final Long folderId, final Long memberId);
     InsightDto getInsight(final Long insightId, final Long memberId);
+    InsightSummaryCollection getInsightSummariesByInsightIds(final List<Long> insightIds, final Long memberId);
 }
