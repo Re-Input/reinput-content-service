@@ -146,13 +146,16 @@ public class InsightServiceImpl implements InsightService {
 
         Insight insight = getInsight(insightId);
 
-        return InsightDto.from(insight, notificationClientAdapter.getReminder(insightId));
+        return InsightDto.from(
+                insight,
+                notificationClientAdapter.getReminder(insightId),
+                workspaceClientAdapter.getFolder(insight.getFolderId(), memberId)
+        );
     }
 
     private Insight getInsight(Long insightId) {
-        Insight insight = insightRepository.findById(insightId)
+        return insightRepository.findById(insightId)
                 .orElseThrow(() -> new IllegalArgumentException("Insight not found"));
-        return insight;
     }
 
 

@@ -1,12 +1,15 @@
 package info.reinput.reinput_content_service.presentation;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import info.reinput.reinput_content_service.application.dto.InsightDto;
+import info.reinput.reinput_content_service.presentation.dto.res.FolderRes;
 import info.reinput.reinput_content_service.presentation.dto.res.ReminderRes;
 import lombok.Builder;
 
 import java.util.List;
 
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record InsightRes (
         Long insightId,
         String insightUrl,
@@ -18,6 +21,7 @@ public record InsightRes (
         List<String> hashTags,
         List<String> insightImages,
         Long folderId,
+        FolderRes folder,
         ReminderRes reminder
 ){
     public static InsightRes from(InsightDto insightDto) {
@@ -37,6 +41,7 @@ public record InsightRes (
                         .enable(insightDto.reminder().isActive())
                         .types(insightDto.reminder().reminderTypes())
                         .build())
+                .folder(FolderRes.from(insightDto.folder()))
                 .build();
     }
 }

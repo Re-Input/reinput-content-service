@@ -55,6 +55,21 @@ public class InsightApiController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Operation(summary = "[201] GetInsihgt Detail",
+            description = "인사이트 상세정보를 조회합니다.")
+    @GetMapping("/{insightId}/v1")
+    public ResponseEntity<ApiResponse<InsightRes>> getInsightDetail(
+            @PathVariable final Long insightId,
+            @RequestHeader("X-User-Id") final Long memberId) {
+        log.info("[getInsightDetail] insightId: {}, memberId: {} ", insightId, memberId);
+        ApiResponse<InsightRes> response = ApiResponse.<InsightRes>builder()
+                .status(HttpStatus.OK.value())
+                .message("Success get insight detail")
+                .data(InsightRes.from(insightService.getInsightDetail(insightId, memberId)))
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/share/{shareId}")
     public ResponseEntity<ApiResponse<InsightSummaryCollection>> getSharedInsightSummaries(
             @PathVariable final String shareId,
