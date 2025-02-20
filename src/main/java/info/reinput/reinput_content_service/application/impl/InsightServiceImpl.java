@@ -63,8 +63,7 @@ public class InsightServiceImpl implements InsightService {
 
         ReminderDto reminderDto = saveReminder(insightDto.reminder());
 
-        Insight insight = insightRepository.findById(insightDto.id())
-                .orElseThrow(() -> new IllegalArgumentException("Insight not found"));
+        Insight insight = getInsight(insightDto.id());
 
         insight.update(
                 Insight.createSummary(insightDto.title(), insightDto.AISummary(), insightDto.mainImagePath()),
@@ -131,10 +130,7 @@ public class InsightServiceImpl implements InsightService {
     public InsightDto getInsight(final Long insightId, final Long memberId) {
         log.info("[InsightService.getInsight] insightId : {}, memberId : {}", insightId, memberId);
 
-        Insight insight = insightRepository.findById(insightId)
-                .orElseThrow(() -> new IllegalArgumentException("Insight not found"));
-
-        return InsightDto.from(insight, null);
+        return InsightDto.from(getInsight(insightId), null);
     }
   
     @Override
@@ -148,14 +144,15 @@ public class InsightServiceImpl implements InsightService {
     public InsightDto getInsightDetail(final Long insightId, final Long memberId) {
         log.info("[InsightService.getInsightDetail] insightId : {}, memberId : {}", insightId, memberId);
 
+        Insight insight = getInsight(insightId);
+
+        return InsightDto.from(insight, notificationClientAdapter.getReminder(insightId));
+    }
+
+    private Insight getInsight(Long insightId) {
         Insight insight = insightRepository.findById(insightId)
                 .orElseThrow(() -> new IllegalArgumentException("Insight not found"));
-
-        //reminderDto 추가
-
-
-
-        return InsightDto.from(insight, null);
+        return insight;
     }
 
 

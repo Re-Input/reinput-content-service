@@ -10,7 +10,7 @@ import java.util.Objects;
 @Builder
 public record ReminderDto(
         Long id,
-        boolean enable,
+        boolean isActive,
         List<ReminderType> reminderTypes
 ) {
 }

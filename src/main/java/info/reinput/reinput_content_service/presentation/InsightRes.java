@@ -34,7 +34,7 @@ public record InsightRes (
                 .folderId(insightDto.folderId())
                 .reminder(ReminderRes.builder()
                         .id(insightDto.reminder().id())
-                        .enable(insightDto.reminder().enable())
+                        .enable(insightDto.reminder().isActive())
                         .types(insightDto.reminder().reminderTypes())
                         .build())
                 .build();
