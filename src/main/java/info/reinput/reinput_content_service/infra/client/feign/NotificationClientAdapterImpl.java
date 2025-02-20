@@ -14,22 +14,14 @@ public class NotificationClientAdapterImpl implements NotificationClientAdapter 
 
     @Override
     public ReminderDto saveReminder(final ReminderDto reminderDto){
-        //reminderCreateReq로 변환
-        ReminderCreateReq reminderCreateReq = ReminderCreateReq.builder()
-                .insightId(reminderDto.id())
+        ReminderCreateReq request = ReminderCreateReq.builder()
+                .types(reminderDto.reminderTypes())
                 .isActive(reminderDto.enable())
-                .types(reminderDto.reminderServiceTypes())
                 .build();
-
-        //notificationClient를 통해 요청
-        ReminderCreateRes res = notificationClient.createReminder(reminderCreateReq);
-
-        //응답을 reminderDto로 변환
+        ReminderCreateRes response = notificationClient.createReminder(request);
         return ReminderDto.builder()
-                .id(res.getInsightId())
-                .enable(res.isActive())
-                .reminderType(reminderDto.reminderType())
-                .reminderDays(reminderDto.reminderDays())
+                .id(response.getReminderId())
+                .enable(response.isActive())
                 .build();
     }
 }

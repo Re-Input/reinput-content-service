@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name = "notification-service")
 public interface NotificationFeignClient {
-    @PatchMapping
+    @PatchMapping("/reminder/v2")
     ReminderCreateRes createReminder(@RequestBody ReminderCreateReq request);
+
+
 }

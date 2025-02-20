@@ -9,7 +9,6 @@ import java.util.List;
 public record ReminderRes(
         Long id,
         boolean enable,
-        ReminderType reminderType,
-        List<Integer> reminderDays
+        List<ReminderType> types
 ) {
 }

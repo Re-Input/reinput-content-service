@@ -144,6 +144,20 @@ public class InsightServiceImpl implements InsightService {
         return InsightSummaryCollection.fromDto(insightRepository.getInsightSummariesByInsightIds(insightIds));
     }
 
+    @Override
+    public InsightDto getInsightDetail(final Long insightId, final Long memberId) {
+        log.info("[InsightService.getInsightDetail] insightId : {}, memberId : {}", insightId, memberId);
+
+        Insight insight = insightRepository.findById(insightId)
+                .orElseThrow(() -> new IllegalArgumentException("Insight not found"));
+
+        //reminderDto 추가
+
+
+
+        return InsightDto.from(insight, null);
+    }
+
 
     private ReminderDto saveReminder(final ReminderDto reminderDto) {
         return notificationClientAdapter.saveReminder(reminderDto);

@@ -7,15 +7,13 @@ import java.util.List;
 
 public record ReminderReq (
         boolean enable,
-        ReminderType reminderType,
-        List<Integer> reminderDays
+        List<ReminderType> types
 ){
 
     public ReminderDto toDto() {
         return ReminderDto.builder()
                 .enable(enable)
-                .reminderType(reminderType)
-                .reminderDays(reminderDays)
+                .reminderTypes(types)
                 .build();
     }
 }

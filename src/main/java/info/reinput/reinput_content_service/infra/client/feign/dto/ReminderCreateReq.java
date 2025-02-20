@@ -2,6 +2,7 @@ package info.reinput.reinput_content_service.infra.client.feign.dto;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import info.reinput.reinput_content_service.common.ReminderType;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +22,7 @@ public class ReminderCreateReq {
     @JsonProperty("isActive")
     private boolean isActive;
 
-    private List<ReminderServiceType> types;
+    private List<ReminderType> types;
 
     @JsonGetter("isActive")
     public boolean isActive() {

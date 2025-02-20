@@ -35,8 +35,7 @@ public record InsightRes (
                 .reminder(ReminderRes.builder()
                         .id(insightDto.reminder().id())
                         .enable(insightDto.reminder().enable())
-                        .reminderType(insightDto.reminder().reminderType())
-                        .reminderDays(insightDto.reminder().reminderDays())
+                        .types(insightDto.reminder().reminderTypes())
                         .build())
                 .build();
     }
