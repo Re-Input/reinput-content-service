@@ -1,5 +1,6 @@
 package info.reinput.reinput_content_service.application.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import info.reinput.reinput_content_service.insight.domain.HashTag;
 import info.reinput.reinput_content_service.insight.domain.Image;
 import info.reinput.reinput_content_service.insight.domain.Insight;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record InsightDto (
         Long id,
         String title,
@@ -23,9 +25,11 @@ public record InsightDto (
         List<String> hashTags,
         List<String> images,
         Long folderId,
+        String folderName,
         Long memberId,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
+        FolderDto folder,
         ReminderDto reminder
 ){
     public static InsightDto from(Insight insight){
@@ -62,6 +66,28 @@ public record InsightDto (
                 .hashTags(insight.getHashTags().stream().map(HashTag::getName).toList())
                 .images(insight.getImages().stream().map(Image::getImagePath).toList())
                 .folderId(insight.getFolderId())
+                .memberId(insight.getMemberId())
+                .createdAt(insight.getTimeAudit().getCreatedAt())
+                .updatedAt(insight.getTimeAudit().getUpdatedAt())
+                .reminder(reminderDto)
+                .build();
+    }
+
+    public static InsightDto from(Insight insight, ReminderDto reminderDto, FolderDto folderDto){
+        return InsightDto.builder()
+                .id(insight.getId())
+                .title(insight.getSummary().getTitle())
+                .AISummary(insight.getSummary().getAISummary())
+                .mainImagePath(insight.getSummary().getMainImagePath())
+                .url(insight.getDetail().getUrl())
+                .memo(insight.getDetail().getMemo())
+                .viewCount(insight.getDetail().getViewCount())
+                .source(insight.getDetail().getSource())
+                .lastViewedAt(insight.getDetail().getLastViewedAt())
+                .hashTags(insight.getHashTags().stream().map(HashTag::getName).toList())
+                .images(insight.getImages().stream().map(Image::getImagePath).toList())
+                .folderId(insight.getFolderId())
+                .folderName(folderDto.name())
                 .memberId(insight.getMemberId())
                 .createdAt(insight.getTimeAudit().getCreatedAt())
                 .updatedAt(insight.getTimeAudit().getUpdatedAt())

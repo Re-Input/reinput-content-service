@@ -6,16 +6,14 @@ import info.reinput.reinput_content_service.common.ReminderType;
 import java.util.List;
 
 public record ReminderReq (
-        boolean enable,
-        ReminderType reminderType,
-        List<Integer> reminderDays
+        boolean isActive,
+        List<ReminderType> types
 ){
 
     public ReminderDto toDto() {
         return ReminderDto.builder()
-                .enable(enable)
-                .reminderType(reminderType)
-                .reminderDays(reminderDays)
+                .isActive(isActive)
+                .reminderTypes(types)
                 .build();
     }
 }

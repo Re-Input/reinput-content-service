@@ -4,6 +4,7 @@ import info.reinput.reinput_content_service.application.dto.ReminderDto;
 import info.reinput.reinput_content_service.infra.client.NotificationClientAdapter;
 import info.reinput.reinput_content_service.infra.client.feign.dto.ReminderCreateReq;
 import info.reinput.reinput_content_service.infra.client.feign.dto.ReminderCreateRes;
+import info.reinput.reinput_content_service.infra.client.feign.dto.ReminderRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,22 +15,24 @@ public class NotificationClientAdapterImpl implements NotificationClientAdapter 
 
     @Override
     public ReminderDto saveReminder(final ReminderDto reminderDto){
-        //reminderCreateReq로 변환
-        ReminderCreateReq reminderCreateReq = ReminderCreateReq.builder()
-                .insightId(reminderDto.id())
-                .isActive(reminderDto.enable())
-                .types(reminderDto.reminderServiceTypes())
+        ReminderCreateReq request = ReminderCreateReq.builder()
+                .types(reminderDto.reminderTypes())
+                .isActive(reminderDto.isActive())
                 .build();
-
-        //notificationClient를 통해 요청
-        ReminderCreateRes res = notificationClient.createReminder(reminderCreateReq);
-
-        //응답을 reminderDto로 변환
+        ReminderCreateRes response = notificationClient.createReminder(request);
         return ReminderDto.builder()
-                .id(res.getInsightId())
-                .enable(res.isActive())
-                .reminderType(reminderDto.reminderType())
-                .reminderDays(reminderDto.reminderDays())
+                .id(response.getReminderId())
+                .isActive(response.isActive())
+                .build();
+    }
+
+    @Override
+    public ReminderDto getReminder(final Long insightId){
+        ReminderRes response = notificationClient.getReminder(insightId);
+        return ReminderDto.builder()
+                .id(response.insightId())
+                .isActive(response.isActive())
+                .reminderTypes(response.types())
                 .build();
     }
 }

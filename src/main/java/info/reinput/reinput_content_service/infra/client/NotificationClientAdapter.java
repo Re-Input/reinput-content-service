@@ -5,4 +5,5 @@ import info.reinput.reinput_content_service.infra.client.feign.dto.ReminderCreat
 
 public interface NotificationClientAdapter {
     ReminderDto saveReminder(final ReminderDto reminderDto);
+    ReminderDto getReminder(final Long insightId);
 }
